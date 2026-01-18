@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Basketball Stat Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    button {
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: bold;
+      border: none;
+      background: #2563eb;
+      color: white;
+    }
+    .end-game {
+      background: #dc2626;
+      margin-top: 20px;
+    }
+    .results {
+      display: none;
+      margin-top: 20px;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Basketball Stat Tracker</h1>
+
+<div class="stats-grid">
+  <button onclick="addPoints(1)">+1</button>
+  <button onclick="addPoints(2)">+2</button>
+  <button onclick="addPoints(3)">+3</button>
+
+  <button onclick="addStat('rebounds')">Rebound</button>
+  <button onclick="addStat('assists')">Assist</button>
+  <button onclick="addStat('steals')">Steal</button>
+  <button onclick="addStat('blocks')">Block</button>
+  <button onclick="addStat('turnovers')">Turnover</button>
+  <button onclick="addStat('fouls')">Foul</button>
+
+  <button onclick="addStat('shotsAttempted')">Shot Attempt</button>
+  <button onclick="addStat('shotsMade')">Shot Made</button>
+  <button onclick="addStat('ftAttempted')">FT Attempt</button>
+  <button onclick="addStat('ftMade')">FT Made</button>
+</div>
+
+<button class="end-game" onclick="endGame()">End Game</button>
+
+<div class="results" id="results"></div>
+
+<script>
+const stats = {
+  points: 0,
+  rebounds: 0,
+  assists: 0,
+  steals: 0,
+  blocks: 0,
+  turnovers: 0,
+  fouls: 0,
+  shotsAttempted: 0,
+  shotsMade: 0,
+  ftAttempted: 0,
+  ftMade: 0
+};
+
+function addStat(stat) {
+  stats[stat]++;
+}
+
+function addPoints(value) {
+  stats.points += value;
+}
+
+function endGame() {
+  document.getElementById("results").style.display = "block";
+  document.getElementById("results").innerText =
+`PTS: ${stats.points}
+REB: ${stats.rebounds}
+AST: ${stats.assists}
+STL: ${stats.steals}
+BLK: ${stats.blocks}
+TO: ${stats.turnovers}
+FOULS: ${stats.fouls}
+FG: ${stats.shotsMade}/${stats.shotsAttempted}
+FT: ${stats.ftMade}/${stats.ftAttempted}`;
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+
+</body>
+</html>
